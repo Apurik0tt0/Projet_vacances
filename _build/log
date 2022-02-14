@@ -1,10 +1,10 @@
 # dune build
 # OCAMLPARAM: unset
-# Workspace root: /home/antonin/Documents/test/Try
-$ /usr/bin/nproc > /tmp/duneb6ef1b.output 2> /dev/null
+# Workspace root: /home/antonin/Documents/Projet_dofus/Projet_vacances
+$ /usr/bin/nproc > /tmp/dunea2ada3.output 2> /dev/null
 # Auto-detected concurrency: 8
 # disable binary cache
-$ /usr/bin/ocamlc.opt -config > /tmp/dune53c323.output
+$ /usr/bin/ocamlc.opt -config > /tmp/duned61ed9.output
 # Dune context:
 #  { name = "default"
 #  ; kind = "default"
@@ -24,14 +24,16 @@ $ /usr/bin/ocamlc.opt -config > /tmp/dune53c323.output
 #      map
 #        { "DUNE_OCAML_HARDCODED" : "/home/antonin/.opam/4.08.1/lib"
 #        ; "DUNE_OCAML_STDLIB" : "/usr/lib/ocaml"
-#        ; "DUNE_SOURCEROOT" : "/home/antonin/Documents/test/Try"
-#        ; "INSIDE_DUNE" : "/home/antonin/Documents/test/Try/_build/default"
+#        ; "DUNE_SOURCEROOT" :
+#            "/home/antonin/Documents/Projet_dofus/Projet_vacances"
+#        ; "INSIDE_DUNE" :
+#            "/home/antonin/Documents/Projet_dofus/Projet_vacances/_build/default"
 #        ; "OCAMLFIND_IGNORE_DUPS_IN" :
-#            "/home/antonin/Documents/test/Try/_build/install/default/lib"
+#            "/home/antonin/Documents/Projet_dofus/Projet_vacances/_build/install/default/lib"
 #        ; "OCAMLPATH" :
-#            "/home/antonin/Documents/test/Try/_build/install/default/lib"
+#            "/home/antonin/Documents/Projet_dofus/Projet_vacances/_build/install/default/lib"
 #        ; "OCAMLTOP_INCLUDE_PATH" :
-#            "/home/antonin/Documents/test/Try/_build/install/default/lib/toplevel"
+#            "/home/antonin/Documents/Projet_dofus/Projet_vacances/_build/install/default/lib/toplevel"
 #        ; "OCAML_COLOR" : "always"
 #        ; "OPAMCOLOR" : "always"
 #        }

@@ -8,6 +8,12 @@ let coo_case x y =
   let new_y = y - (y mod 50) in
   (new_x,new_y)
 
+(* renvoie les coordonées de la case dans le tableau*)
+let coo_case_tab x y =
+  match coo_case x y with
+  |a,b ->
+      ((a/50),(b/50))
+
 (* affiche la ligne de vue du sort a partir des coo données*)
 let range x y po =
   let case = coo_case x y in
@@ -23,34 +29,54 @@ let draw_player x y =
   match coo_case x y with
   |a,b -> Graphic_image.draw_image player1 a b
 
-(*renvoie le type d'action que fait la personne*)
-let action x y =
-  let case = coo_case x y in
-  match case with
-  |a,b ->
-    if a>14*50 && b<4*50
-    then "sort"
-    else if a>5*50 && a<1250-5*50 && b>4*50
-    then "plateau"
-    else "rien" 
 
-
+type case = Vide | Plein | Libre | Spell
 
 let _ =
 
     open_graph " 1250x1000";
 
+    let map = [|[|Spell;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Plein;Vide;Vide;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Plein;Vide;Vide;Libre;Libre;Libre;Libre;Libre;Vide;Vide;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Vide;Vide;Plein;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|]|] in 
+
+    let bouchon = ref 0 in
     let bmp = Bmp.load "map.bmp" [] in
     let frame = ref 0 in
     let running = ref true in
     let x_p1 = ref 200 in
     let y_p1 = ref 350 in
     let is_sort = ref false in
+
+
     (* on va viser les 60 images secondes *)
     let minimal_frame_time = 1.0 /. 60. in
     (* on supprime la synchronisation automatique de l'écran avec le tampon *)
     auto_synchronize false;
 
+    
     while !running do
         let start_time = Sys.time () in
         incr frame;
@@ -59,19 +85,29 @@ let _ =
 
         Graphic_image.draw_image bmp 0 0;
         draw_player !x_p1 !y_p1;
-      if button_down()
+      
+      
+      
+        if button_down()
         then begin
           set_color (rgb 0 0 255);
           match mouse_pos() with
           |a,b -> 
           match coo_case a b with
-          |x,y -> 
-            if action x y = "sort"
-            then begin
-                is_sort := true;
-            end;
+          |x,y ->
+              match coo_case_tab x y with
+              |x',y' -> 
+                match map.(x').(y') with
+                |Vide -> bouchon := 1;
+                |Plein -> bouchon := 2;
+                |Libre -> x_p1 := x; 
+                          y_p1 := y;
+                |Spell -> is_sort := not !is_sort;
       
         end;
+        
+
+
         if !is_sort
           then begin 
             set_color (rgb 0 0 255);
