@@ -1,0 +1,3 @@
+(executable
+  (name test)
+  (libraries graphics unix camlimages.core camlimages.graphics camlimages.png))
