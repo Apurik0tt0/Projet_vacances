@@ -2,6 +2,28 @@ open Graphics
 (* L'objectif ici est d'essayer de programmer une boucle de gestion
    des événements sans latence *)
 
+type entite =
+   {
+     nom : string;
+     mutable vie : int;
+     mutable pa : int;
+     mutable pm: int;
+     mutable coo_x : int;
+     mutable coo_y : int;
+   
+   }
+ 
+type spell =
+ {
+   nom : string;
+   forme : string;
+   cout : int;
+   po : int;
+ }
+ 
+type case = Vide | Plein | Libre | Spell of string
+
+
 (* renvoie le coin en bas a gauche de la case*)
 let coo_case x y =
   let new_x = x - (x mod 50) in
@@ -11,26 +33,69 @@ let coo_case x y =
 (* renvoie les coordonées de la case dans le tableau*)
 let coo_case_tab x y =
   match coo_case x y with
-  |a,b ->
+  |a,b -> 
       ((a/50),(b/50))
 
-(* affiche la ligne de vue du sort a partir des coo données*)
-let range x y po =
-  let case = coo_case x y in
-  for i=0 to po do
-    match case with
-    |a,b -> fill_rect (a-po*50+i*50) (b+i*50) (po*100-100*i+50) 50;
-            fill_rect (a-po*50+i*50) (b-i*50) (po*100-100*i+50) 50;
-  done
+let color_case_tab x y =
+    fill_rect (50*x) (50*y) 50 50
 
+(* affiche la ligne de vue du sort a partir des coo données*)
+let range x y po map =
+  let debug = ref 0 in
+  let triangle = ref 0 in
+    match coo_case_tab x y with
+    |x',y' ->
+      for i = x'-po to x'+po do
+        for j = y'- !triangle to y'+ !triangle do
+          match map.(i).(j) with
+          |Libre -> color_case_tab i j;
+          |_ -> debug := 1;
+        done;
+      if i<x'
+        then incr triangle
+      else
+        decr triangle; 
+      done
+
+  
 (* positionne le joueur aux coordonées données*)
 let draw_player x y =
   let player1 = Bmp.load "Images/iop.bmp" [] in
   match coo_case x y with
   |a,b -> Graphic_image.draw_image player1 a b
 
+(*Lance un combat et décrit le tour de chaque joueur*)
+(*let rec combat (player_list : entite list) =
+  let tour = ref true in
+  match player_list with
+  |[]-> failwith "fin de combat"
+  |current::following -> 
+    while !tour do
+      set_color (rgb 0 255 0);
+      range current.coo_x current.coo_y current.pm;
+      if button_down()
+      then begin
+        match mouse_pos() with
+          |a,b -> 
+            match coo_case with
+            |x,y->
+              match coo_case_tab a b with
+              |x',y' ->
+                if point_color = (rgb 0 255 0)
+                then begin
+                  current.coo_x := x';
+                  current.coo_y := y';
+                end;
+                
+              
 
-type case = Vide | Plein | Libre | Spell of string
+
+      end;
+    done;
+    combat following;
+    *)
+
+
 
 let _ =
 
@@ -124,10 +189,9 @@ let _ =
         if !is_sort
           then begin 
             set_color (rgb 0 0 255);
-            range !x_p1 !y_p1 3;
+            range !x_p1 !y_p1 3 map;
 
           end;
-
 
 
         (* on rafraichit l'écran *)
