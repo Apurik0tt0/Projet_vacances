@@ -25,18 +25,18 @@ let range x y po =
 
 (* positionne le joueur aux coordonées données*)
 let draw_player x y =
-  let player1 = Bmp.load "iop.bmp" [] in
+  let player1 = Bmp.load "Images/iop.bmp" [] in
   match coo_case x y with
   |a,b -> Graphic_image.draw_image player1 a b
 
 
-type case = Vide | Plein | Libre | Spell
+type case = Vide | Plein | Libre | Spell of string
 
 let _ =
 
     open_graph " 1250x1000";
 
-    let map = [|[|Spell;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    let map = [|[|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
     [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
     [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
     [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
@@ -50,20 +50,21 @@ let _ =
     [|Libre;Libre;Libre;Libre;Libre;Libre;Plein;Vide;Vide;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Vide|];
     [|Libre;Libre;Libre;Libre;Libre;Libre;Plein;Vide;Vide;Libre;Libre;Libre;Libre;Libre;Vide;Vide;Libre;Libre;Libre;Vide|];
     [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Vide;Vide;Plein;Libre;Libre;Vide|];
-    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
-    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Vide|];
-    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Vide|];
-    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
-    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
-    [|Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
-    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
-    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
-    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
-    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
-    [|Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|]|] in 
+    [|Spell "Pression";Spell "Fracture";Spell "Duel";Spell "Emprise";Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Spell "Bond";Spell "Determination";Spell "Tempete de puissance";Spell "Tumulte";Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Vide|];
+    [|Spell "Deferlement";Spell "Anneau destructeur";Spell "Epee celeste";Spell "Zenith";Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Vide|];
+    [|Spell "Epee divine";Spell "Couperet";Spell "Puissance";Spell "Vertu";Libre;Libre;Libre;Libre;Libre;Libre;Plein;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Spell "Epee destructrice";Spell "Accumulation";Spell "Precipitation";Spell "Agitation";Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Spell "Intimidation";Spell "Conquete";Spell "Fustigation";Spell "Endurance";Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Libre;Vide|];
+    [|Spell "Souffle";Spell "Violence";Spell "Epee de iop";Spell "Pugilat";Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Spell "Massacre";Spell "Rassemblement";Spell "Vitalite";Spell "Vindicte";Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Spell "Concentration";Spell "Epee de jugement";Spell "Epee du destin";Spell "Tannee";Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Spell "Ferveur";Spell "Menace";Spell "Fendoir";Spell "Sentence";Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|];
+    [|Spell "Friction";Spell "Coup pour coup";Spell "Colere de iop";Spell "Fureur";Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide;Vide|]|] in 
 
     let bouchon = ref 0 in
-    let bmp = Bmp.load "map.bmp" [] in
+    let bmp = Bmp.load "Images/map.bmp" [] in
+    let spell = Bmp.load "Images/spell.bmp" [] in
     let frame = ref 0 in
     let running = ref true in
     let x_p1 = ref 200 in
@@ -84,6 +85,7 @@ let _ =
         set_color black;
 
         Graphic_image.draw_image bmp 0 0;
+        Graphic_image.draw_image spell 700 0;
         draw_player !x_p1 !y_p1;
       
       
@@ -102,11 +104,22 @@ let _ =
                 |Plein -> bouchon := 2;
                 |Libre -> x_p1 := x; 
                           y_p1 := y;
-                |Spell -> is_sort := not !is_sort;
+                |Spell nom -> is_sort := not !is_sort;
+                              moveto x y;
+                              draw_string nom;
       
         end;
         
-
+       (* match mouse_pos() with
+        |x,y -> 
+          match coo_case_tab x y with
+          |x',y' -> 
+            match map.(x').(y') with
+            |Vide -> bouchon := 0;
+            |Plein -> bouchon := 1;
+            |Libre -> bouchon := 0;
+            |Spell nom -> moveto x y;
+                          draw_string nom; *)
 
         if !is_sort
           then begin 
