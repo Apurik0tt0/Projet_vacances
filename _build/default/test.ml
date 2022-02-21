@@ -39,6 +39,7 @@ let coo_case_tab x y =
 let color_case_tab x y =
     fill_rect (50*x) (50*y) 50 50
 
+
 (* affiche la ligne de vue du sort a partir des coo données*)
 let range x y po map =
   let debug = ref 0 in
@@ -49,7 +50,7 @@ let range x y po map =
         for j = y'- !triangle to y'+ !triangle do
           match map.(i).(j) with
           |Libre -> color_case_tab i j;
-          |_ -> debug := 1;
+          |_->debug := 1;
         done;
       if i<x'
         then incr triangle
