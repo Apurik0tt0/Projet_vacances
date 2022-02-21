@@ -39,24 +39,105 @@ let coo_case_tab x y =
 let color_case_tab x y =
     fill_rect (50*x) (50*y) 50 50
 
+let ligne_de_vue x y x' y' map =
+  set_color (rgb 0 0 255);
+  let debug = ref 0 in
+  let vide = ref true in
+  let i = ref 0. in
+  let y_case = ref 0. in
+  let pente = (float_of_int y' -. float_of_int y) /. (float_of_int x' -. float_of_int x) in
+
+  if x < x' 
+    then begin
+
+      while !vide do
+        i := !i +. 1.;
+        if (!i = (float_of_int x' *. 50. +. 25.) -. (float_of_int x *. 50. +. 25.) )   then vide :=false;
+        y_case := ( ((float_of_int y) *. 50. +. 25.) +. pente *. !i );
+        if !y_case = 200. then vide :=false;
+        match coo_case_tab (x * 50 + 25 + int_of_float !i) (int_of_float !y_case) with
+        |(a,b) -> 
+          match map.(a).(b) with 
+          |Plein -> set_color (rgb 0 0 155);
+          |Libre -> color_case_tab a b;
+          |_ -> debug := 1;
+      done;
+    end
+  else if x > x' 
+    then begin 
+
+      while !vide do
+        i := !i -. 1.;
+        if (!i = (float_of_int x' *. 50. +. 25.) -. (float_of_int x *. 50. +. 25.) )   then vide :=false;
+        y_case := ( ((float_of_int y) *. 50. +. 25.) +. pente *. !i );
+        if !y_case = 200. then vide :=false;
+        match coo_case_tab (x * 50 + 25 + int_of_float !i) (int_of_float !y_case) with
+        |(a,b) -> 
+          match map.(a).(b) with 
+          |Plein -> set_color (rgb 0 0 155);
+          |Libre -> color_case_tab a b;
+          |_ -> debug := 1;
+      done;
+    end
+  else begin
+    if y < y'
+      then begin
+        i := (float_of_int y) *. 50.;
+        while !vide do
+          i := !i +. 50. ;
+          if int_of_float !i = y' * 50 then vide := false ;
+          match coo_case_tab (x*50) (int_of_float !i) with
+          |a,b -> 
+            match map.(a).(b) with
+            |Plein -> set_color (rgb 0 0 155);
+            |Libre -> color_case_tab a b;
+            |_ -> debug := 1;
+        done;
+      end
+    else begin
+      i := (float_of_int y) *. 50. ;
+      while !vide do
+        i := !i -. 50. ;
+        if int_of_float !i = y' * 50 then vide := false ;
+        match coo_case_tab (x * 50) (int_of_float !i) with
+        |a,b -> 
+          match map.(a).(b) with
+          |Plein -> set_color (rgb 0 0 155);
+          |Libre -> color_case_tab a b;
+          |_ -> debug := 1;
+      done;
+    end;
+  end
+    
+    
 
 (* affiche la ligne de vue du sort a partir des coo données*)
-let range x y po map =
-  let debug = ref 0 in
+(*let range x y po map =
   let triangle = ref 0 in
     match coo_case_tab x y with
     |x',y' ->
       for i = x'-po to x'+po do
         for j = y'- !triangle to y'+ !triangle do
-          match map.(i).(j) with
-          |Libre -> color_case_tab i j;
-          |_->debug := 1;
+          ligne_de_vue x y i j map;
         done;
       if i<x'
         then incr triangle
       else
         decr triangle; 
-      done
+      done*)
+let range x y map =
+  ligne_de_vue x y (x-3) y map;
+  ligne_de_vue x y (x-2) (y-1) map;
+  ligne_de_vue x y (x-1) (y-2) map;
+  ligne_de_vue x y (x+1) (y-2) map;
+  ligne_de_vue x y (x+2) (y-1) map;
+  ligne_de_vue x y (x+3) y map;
+  ligne_de_vue x y (x+2) (y+1) map;
+  ligne_de_vue x y (x+1) (y+2) map;
+  ligne_de_vue x y (x-1) (y+2) map;
+  ligne_de_vue x y (x-2) (y+1) map;
+  ligne_de_vue x y x (y + 3) map;
+  ligne_de_vue x y x (y - 3) map
 
   
 (* positionne le joueur aux coordonées données*)
@@ -64,38 +145,6 @@ let draw_player x y =
   let player1 = Bmp.load "Images/iop.bmp" [] in
   match coo_case x y with
   |a,b -> Graphic_image.draw_image player1 a b
-
-(*Lance un combat et décrit le tour de chaque joueur*)
-(*let rec combat (player_list : entite list) =
-  let tour = ref true in
-  match player_list with
-  |[]-> failwith "fin de combat"
-  |current::following -> 
-    while !tour do
-      set_color (rgb 0 255 0);
-      range current.coo_x current.coo_y current.pm;
-      if button_down()
-      then begin
-        match mouse_pos() with
-          |a,b -> 
-            match coo_case with
-            |x,y->
-              match coo_case_tab a b with
-              |x',y' ->
-                if point_color = (rgb 0 255 0)
-                then begin
-                  current.coo_x := x';
-                  current.coo_y := y';
-                end;
-                
-              
-
-
-      end;
-    done;
-    combat following;
-    *)
-
 
 
 let _ =
@@ -190,7 +239,9 @@ let _ =
         if !is_sort
           then begin 
             set_color (rgb 0 0 255);
-            range !x_p1 !y_p1 3 map;
+            match coo_case_tab !x_p1 !y_p1 with
+            |a,b ->
+              range a b map;
 
           end;
 
